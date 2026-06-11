@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Loader2, ShieldAlert, CheckCircle, AlertTriangle } from "lucide-react";
 import Card, { Btn } from "../ui";
 
 // Terminal lines that type out one by one during the scan
@@ -53,8 +54,9 @@ function TerminalScan({ entered, onDone }) {
       {/* Header */}
       <div className="flex items-center gap-2 mb-3">
         <motion.div animate={{ rotate: 360 }}
-          transition={{ repeat: Infinity, duration: 1.2, ease: "linear" }}
-          className="w-4 h-4 rounded-full border-2 border-green-400/40 border-t-green-400 flex-shrink-0" />
+          transition={{ repeat: Infinity, duration: 1.2, ease: "linear" }}>
+          <Loader2 size={18} className="text-green-400" strokeWidth={2.5} />
+        </motion.div>
         <p className="text-green-400 text-xs font-mono font-bold uppercase tracking-widest">
           Database Scan Active
         </p>
@@ -107,7 +109,9 @@ function CaughtFlow({ entered, onNext }) {
         <motion.div key="s0" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }} className="text-center">
           <motion.div animate={{ rotate: [-4, 4, -4, 4, 0] }} transition={{ duration: 0.5 }}
-            className="text-5xl mb-4">🕵️</motion.div>
+            className="flex justify-center mb-4">
+            <ShieldAlert size={48} className="text-purple-400" strokeWidth={1.5} />
+          </motion.div>
           <p className="text-white font-bold text-lg mb-2">Nahi nahi nahi... 🤨</p>
           <p className="text-purple-200 text-sm mb-5">
             Tumne likha <span className="text-pink-300 font-semibold">"{entered}"</span>?<br />
@@ -121,7 +125,9 @@ function CaughtFlow({ entered, onNext }) {
         <motion.div key="s1" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -8 }} className="text-center">
           <motion.div animate={{ rotate: [-4, 4, -4, 4, 0] }} transition={{ duration: 0.5 }}
-            className="text-5xl mb-4">🕵️</motion.div>
+            className="flex justify-center mb-4">
+            <AlertTriangle size={48} className="text-yellow-400" strokeWidth={1.5} />
+          </motion.div>
           <p className="text-white font-bold text-lg mb-2">Jhooth pakda gaya! 😂</p>
           <p className="text-purple-200 text-sm mb-5">
             Hum abhi tumhara asli naam dhundh rahe hain.<br />
@@ -142,7 +148,9 @@ function CaughtFlow({ entered, onNext }) {
           exit={{ opacity: 0 }} transition={{ type: "spring", stiffness: 240, damping: 18 }}
           className="text-center">
           <motion.div animate={{ scale: [1, 1.25, 1] }} transition={{ duration: 0.5, repeat: 2 }}
-            className="text-5xl mb-4">✅</motion.div>
+            className="flex justify-center mb-4">
+            <CheckCircle size={48} className="text-green-400" strokeWidth={1.5} />
+          </motion.div>
           <p className="text-green-400 font-bold text-lg mb-1">Database match mili — PRIYA ✔</p>
           <p className="text-pink-300 text-sm mb-2">
             Tumhara asli naam Priya hai. Hum jaante the 😌
@@ -173,7 +181,9 @@ export default function ScreenNameEntry({ onNext }) {
     <Card>
       <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}
         transition={{ type: "spring", stiffness: 200, delay: 0.15 }}
-        className="text-5xl text-center mb-3">🔍</motion.div>
+        className="flex justify-center mb-3">
+        <ShieldAlert size={48} className="text-pink-400" strokeWidth={1.5} />
+      </motion.div>
 
       <p className="text-xs text-pink-300 uppercase tracking-widest mb-2 text-center">
         Investigation Dept. of India

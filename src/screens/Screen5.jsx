@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Card, { OptionBtn, Btn } from "../ui";
 import { useGame } from "../GameState";
+import { RotateCw } from "lucide-react";
 
 const options = [
   {
@@ -82,7 +83,9 @@ export default function Screen5({ onNext }) {
         {locked && (
           <motion.div key="locked" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-2 mb-3">
             <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-              className="text-2xl w-fit mx-auto mb-1">🔄</motion.div>
+              className="flex justify-center mb-1">
+              <RotateCw size={24} className="text-purple-400" strokeWidth={2} />
+            </motion.div>
             <p className="text-purple-200 text-xs">Filing response...</p>
           </motion.div>
         )}

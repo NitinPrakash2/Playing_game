@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Card, { Btn } from "../ui";
 import { useGame } from "../GameState";
+import { Crystal } from "lucide-react";
 
 const loadingMsgs = ["Analyzing destiny...", "Analyzing luck...", "Analyzing WiFi...", "Consulting the universe..."];
 
@@ -39,8 +40,10 @@ export default function ScreenPrediction({ onNext }) {
             <motion.div
               animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.08, 1] }}
               transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
-              className="text-6xl mb-6"
-            >🔮</motion.div>
+              className="flex justify-center mb-6"
+            >
+              <Crystal size={56} className="text-purple-400" strokeWidth={1.5} />
+            </motion.div>
             <Btn onClick={predict}>Predict My Future</Btn>
           </motion.div>
         )}
@@ -50,8 +53,10 @@ export default function ScreenPrediction({ onNext }) {
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-              className="text-5xl mb-5 w-fit mx-auto"
-            >🔮</motion.div>
+              className="flex justify-center mb-5"
+            >
+              <Crystal size={48} className="text-purple-400" strokeWidth={1.5} />
+            </motion.div>
             <AnimatePresence mode="wait">
               <motion.p
                 key={msgIdx}
@@ -69,8 +74,10 @@ export default function ScreenPrediction({ onNext }) {
             <motion.div
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 0.5, repeat: 2 }}
-              className="text-5xl mb-3"
-            >{prediction.emoji}</motion.div>
+              className="flex justify-center mb-3"
+            >
+              {prediction.emoji && <span className="text-5xl">{prediction.emoji}</span>}
+            </motion.div>
             <p className="text-white/60 text-xs uppercase tracking-widest mb-1">Today's Prediction:</p>
             <p className="text-white font-bold text-base mb-3">{prediction.label}</p>
             <div className="bg-white/5 border border-white/10 rounded-2xl p-4 mb-5">

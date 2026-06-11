@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Card, { Btn } from "../ui";
 import { useGame } from "../GameState";
+import { Clover } from "lucide-react";
 
 const loadMsgs = ["Calculating luck...", "Consulting universe...", "Avoiding bugs...", "Checking stars...", "Filing report..."];
 
@@ -47,8 +48,10 @@ export default function ScreenLuckAnalysis({ onNext }) {
             <motion.div
               animate={{ rotate: [0, 15, -15, 0], scale: [1, 1.1, 1] }}
               transition={{ repeat: Infinity, duration: 2.5 }}
-              className="text-6xl mb-6"
-            >🍀</motion.div>
+              className="flex justify-center mb-6"
+            >
+              <Clover size={56} className="text-green-400" strokeWidth={1.5} />
+            </motion.div>
             <Btn onClick={analyze}>Analyze Luck</Btn>
           </motion.div>
         )}
@@ -61,7 +64,7 @@ export default function ScreenLuckAnalysis({ onNext }) {
                 transition={{ repeat: Infinity, duration: 1.2, ease: "linear" }}
                 className="absolute inset-0 rounded-full border-2 border-green-400/30 border-t-green-400"
               />
-              <span className="absolute inset-0 flex items-center justify-center text-2xl">🍀</span>
+              <Clover size={32} className="text-green-400 absolute inset-0 m-auto" strokeWidth={1.5} />
             </motion.div>
             <AnimatePresence mode="wait">
               <motion.p key={msgIdx} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }}

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Card, { Btn } from "../ui";
 import { useGame } from "../GameState";
+import { Package } from "lucide-react";
 
 const items = [
   { emoji: "🍕", title: "Pizza Coupon", sub: "Expired" },
@@ -20,7 +21,7 @@ export default function ScreenEvidenceBox({ onNext }) {
   return (
     <Card>
       <p className="text-xs text-pink-300 uppercase tracking-widest mb-2 text-center">Case #4729-B</p>
-      <h2 className="text-white font-bold text-lg text-center mb-1">Confidential Evidence Box 📦</h2>
+      <h2 className="text-white font-bold text-lg text-center mb-1">Confidential Evidence Box</h2>
       <p className="text-purple-200 text-sm text-center mb-5">We found a secret item.</p>
 
       <AnimatePresence mode="wait">
@@ -29,8 +30,10 @@ export default function ScreenEvidenceBox({ onNext }) {
             <motion.div
               animate={{ y: [0, -8, 0], rotate: [0, -3, 3, 0] }}
               transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-              className="text-6xl mb-6"
-            >📦</motion.div>
+              className=""
+            >
+              <Package size={64} className="text-yellow-400 mx-auto" strokeWidth={1.5} />
+            </motion.div>
             <Btn onClick={() => { setOpened(true); unlock("evidence"); awardRandom(); }}>Open Box</Btn>
           </motion.div>
         ) : (

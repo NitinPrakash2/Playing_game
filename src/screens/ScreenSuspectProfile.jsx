@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Card, { Btn } from "../ui";
 import { useGame } from "../GameState";
+import { FileText, CheckCircle } from "lucide-react";
 
 const steps = [
   {
@@ -79,9 +80,9 @@ export default function ScreenSuspectProfile({ onNext }) {
         ) : (
           <motion.div key="dossier" initial={{ opacity: 0, scale: 0.92 }} animate={{ opacity: 1, scale: 1 }}
             transition={{ type: "spring", stiffness: 240, damping: 20 }}>
-            <p className="text-xs text-green-300 uppercase tracking-widest text-center mb-3">Profile Generated ✔</p>
+            <p className="text-xs text-green-300 uppercase tracking-widest text-center mb-3 flex items-center justify-center gap-1"><CheckCircle size={14} /> Profile Generated</p>
             <div className="bg-black/40 border border-white/15 rounded-2xl p-4 font-mono text-sm mb-4 space-y-2.5">
-              <div className="text-green-400 font-bold text-base mb-1">SUSPECT_PROFILE.txt</div>
+              <div className="text-green-400 font-bold text-base mb-1 flex items-center gap-2"><FileText size={16} /> SUSPECT_PROFILE.txt</div>
               {[
                 ["Mood Status",    picks[0]?.val],
                 ["Energy Level",   picks[1]?.val],

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Card, { Btn } from "../ui";
 import { useGame } from "../GameState";
+import { Activity, Check, AlertTriangle } from "lucide-react";
 
 const questions = [
   "Kya tum kabhi boring nahi hoti? 🤔",
@@ -153,7 +154,7 @@ export default function ScreenLieDetector({ onNext }) {
 
       {/* Live stress graph — always visible */}
       <div className="bg-black/40 border border-white/10 rounded-2xl px-3 pt-2 pb-1 mb-4">
-        <p className="text-white/30 text-xs mb-1">Live Stress Monitor</p>
+        <p className="text-white/30 text-xs mb-1 flex items-center gap-1"><Activity size={12} /> Live Stress Monitor</p>
         <StressGraph
           value={phase === "result" && result ? result.stress : phase === "scanning" ? 85 : 18}
           animate={phase !== "idle"}
@@ -188,8 +189,8 @@ export default function ScreenLieDetector({ onNext }) {
           <motion.div key="result" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
             transition={{ type: "spring", stiffness: 260, damping: 20 }}>
             <div className="bg-black/40 border border-white/15 rounded-2xl p-4 font-mono text-xs mb-4">
-              <p className={`font-bold mb-2 text-sm ${result.stress > 50 ? "text-red-400" : "text-green-400"}`}>
-                {result.stress > 50 ? "⚠ ANOMALY DETECTED" : "✔ RESPONSE VERIFIED"}
+              <p className={`font-bold mb-2 text-sm flex items-center gap-2 ${result.stress > 50 ? "text-red-400" : "text-green-400"}`}>
+                {result.stress > 50 ? (<><AlertTriangle size={14} /> ANOMALY DETECTED</>) : (<><Check size={14} /> RESPONSE VERIFIED</>)}
               </p>
               <div className="space-y-1.5 text-white/70 mb-3">
                 <div className="flex justify-between">

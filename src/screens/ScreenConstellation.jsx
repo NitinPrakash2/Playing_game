@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Card, { Btn } from "../ui";
 import { useGame } from "../GameState";
+import { Sparkles } from "lucide-react";
 
 const loadMsgs = ["Analyzing data...", "Connecting stars...", "Generating profile...", "Almost ready..."];
 
@@ -56,7 +57,7 @@ export default function ScreenConstellation({ onNext }) {
   return (
     <Card>
       <p className="text-xs text-pink-300 uppercase tracking-widest mb-2 text-center">Profile Analysis</p>
-      <h2 className="text-white font-bold text-base text-center mb-1">Building Personality Constellation ⭐</h2>
+      <h2 className="text-white font-bold text-base text-center mb-1">Building Personality Constellation</h2>
 
       <AnimatePresence mode="wait">
         {phase === "loading" && (
@@ -89,7 +90,7 @@ export default function ScreenConstellation({ onNext }) {
 
         {phase === "reveal" && (
           <motion.div key="reveal" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <p className="text-xs text-purple-300 uppercase tracking-widest text-center mb-4">Constellation Complete ✨</p>
+            <p className="text-xs text-purple-300 uppercase tracking-widest text-center mb-4 flex items-center justify-center gap-1"><Sparkles size={14} /> Constellation Complete</p>
             <div className="flex flex-col gap-2 mb-4">
               {traits.slice(0, visibleTraits).map((t, i) => (
                 <motion.div
@@ -102,8 +103,10 @@ export default function ScreenConstellation({ onNext }) {
                   <motion.span
                     animate={{ scale: [1, 1.4, 1] }}
                     transition={{ duration: 0.4 }}
-                    className="text-lg"
-                  >⭐</motion.span>
+                    className=""
+                  >
+                    <Sparkles size={18} className={t.color} />
+                  </motion.span>
                   <span className={`font-semibold text-sm ${t.color}`}>{t.label}</span>
                 </motion.div>
               ))}

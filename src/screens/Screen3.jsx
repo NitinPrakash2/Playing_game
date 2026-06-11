@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Card, { Btn } from "../ui";
 import { useGame } from "../GameState";
+import { RotateCw } from "lucide-react";
 
 const msgs = [
   "Scanning personality...",
@@ -77,8 +78,10 @@ export default function Screen3({ onNext, answers }) {
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-              className="text-5xl mx-auto mb-6 w-fit"
-            >🔄</motion.div>
+              className="flex justify-center mb-6"
+            >
+              <RotateCw size={40} className="text-purple-400" strokeWidth={2} />
+            </motion.div>
             <AnimatePresence mode="wait">
               <motion.p
                 key={msgIdx}

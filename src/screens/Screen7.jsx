@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Card, { Btn } from "../ui";
 import { useGame } from "../GameState";
+import { Lock } from "lucide-react";
 
 const lines = [
   { text: "PRIYA.EXE", style: "text-green-400 font-bold text-lg" },
@@ -52,8 +53,10 @@ export default function Screen7({ onNext }) {
             <motion.div
               animate={{ scale: [1, 1.1, 1] }}
               transition={{ repeat: Infinity, duration: 1.5 }}
-              className="text-5xl mb-6"
-            >🔒</motion.div>
+              className="flex justify-center mb-6"
+            >
+              <Lock size={48} className="text-pink-400" strokeWidth={1.5} />
+            </motion.div>
             <Btn onClick={() => { setOpened(true); setVisibleLines(1); }}>Open File</Btn>
           </motion.div>
         ) : (

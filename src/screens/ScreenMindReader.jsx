@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Card, { Btn } from "../ui";
 import { useGame } from "../GameState";
+import { Zap } from "lucide-react";
 
 // Each option influences signal strength + which thought pool is used
 const options = [
@@ -193,7 +194,7 @@ export default function ScreenMindReader({ onNext }) {
             <AnimatePresence>
               {sel !== null && (
                 <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}>
-                  <Btn onClick={startScan}>Start Neural Scan 🔬</Btn>
+                  <Btn onClick={startScan} icon={Zap}>Start Neural Scan</Btn>
                 </motion.div>
               )}
             </AnimatePresence>

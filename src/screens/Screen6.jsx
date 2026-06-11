@@ -2,11 +2,13 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Card, { OptionBtn, Btn } from "../ui";
 import { useGame } from "../GameState";
+import { RotateCw, CheckCircle, Trash2, Fish } from "lucide-react";
 
 const options = [
   {
     label: "Haan yaad hai 😎",
-    tag: "✅ Verified",
+    tag: CheckCircle,
+    tagText: "Verified",
     emoji: "🧠",
     resp: "Memory functional. This is suspicious. Normal people forget things. Investigation team concerned.",
     note: "Memory status: Unnaturally good.",
@@ -15,7 +17,8 @@ const options = [
   },
   {
     label: "Nahi yaad 😭",
-    tag: "📋 Noted",
+    tag: Trash2,
+    tagText: "Noted",
     emoji: "😅",
     resp: "Expected response. Investigation team was betting on this. Memory unit: partially offline.",
     note: "Memory status: Selectively unavailable.",
@@ -24,7 +27,8 @@ const options = [
   },
   {
     label: "Kaunsa page? 🤨",
-    tag: "🐠 Goldfish Mode",
+    tag: Fish,
+    tagText: "Goldfish Mode",
     emoji: "🐠",
     resp: "Goldfish memory detected. You started this app 5 minutes ago. Investigation team is in shock.",
     note: "Memory status: Factory reset recommended.",
@@ -53,12 +57,15 @@ export default function Screen6({ onNext }) {
         Kya tumhe pehla page yaad hai?
       </h2>
       <div className="flex flex-col gap-2 mb-3">
-        {options.map((o, i) => (
-          <OptionBtn key={i} onClick={() => { if (!locked) setSel(i); }} selected={sel === i}>
-            <span>{o.label}</span>
-            {sel === i && <span className="ml-2 text-xs text-pink-300">{o.tag}</span>}
-          </OptionBtn>
-        ))}
+        {options.map((o, i) => {
+          const TagIcon = o.tag;
+          return (
+            <OptionBtn key={i} onClick={() => { if (!locked) setSel(i); }} selected={sel === i}>
+              <span>{o.label}</span>
+              {sel === i && <span className="ml-2 text-xs text-pink-300 flex items-center gap-1"><TagIcon size={14} /> {o.tagText}</span>}
+            </OptionBtn>
+          );
+        })}
       </div>
 
       <AnimatePresence mode="wait">
@@ -83,7 +90,9 @@ export default function Screen6({ onNext }) {
         {locked && (
           <motion.div key="locked" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-2 mb-3">
             <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-              className="text-2xl w-fit mx-auto mb-1">🔄</motion.div>
+              className="flex justify-center mb-1">
+              <RotateCw size={24} className="text-purple-400" strokeWidth={2} />
+            </motion.div>
             <p className="text-purple-200 text-xs">Filing response...</p>
           </motion.div>
         )}

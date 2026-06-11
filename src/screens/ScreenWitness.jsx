@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Card, { Btn } from "../ui";
 import { useGame } from "../GameState";
+import { Eye } from "lucide-react";
 
 const statements = [
   "I saw nothing.",
@@ -50,8 +51,10 @@ export default function ScreenWitness({ onNext }) {
             <motion.div
               animate={{ rotate: [0, -5, 5, 0], scale: [1, 1.05, 1] }}
               transition={{ repeat: Infinity, duration: 2.5 }}
-              className="text-5xl mb-6"
-            >🕵️</motion.div>
+              className="flex justify-center mb-6"
+            >
+              <Eye size={56} className="text-purple-400" strokeWidth={1.5} />
+            </motion.div>
             <Btn onClick={() => { setPhase("typing"); unlock("witness"); awardRandom(); }}>Show Statement</Btn>
           </motion.div>
         )}

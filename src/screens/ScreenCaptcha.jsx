@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Card, { Btn } from "../ui";
 import { useGame } from "../GameState";
+import { RotateCw, XCircle } from "lucide-react";
 
 const emojis = ["🐱", "🍕", "🌙", "🐶", "🎧", "☕", "📚", "🎮", "🌧️"];
 
@@ -57,7 +58,9 @@ export default function ScreenCaptcha({ onNext }) {
 
         {phase === "loading" && (
           <motion.div key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-center py-8">
-            <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1.2, ease: "linear" }} className="text-4xl mb-4 w-fit mx-auto">🔄</motion.div>
+            <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1.2, ease: "linear" }} className="flex justify-center mb-4">
+              <RotateCw size={40} className="text-purple-400" strokeWidth={2} />
+            </motion.div>
             <p className="text-purple-200 text-sm">Searching for Priya...</p>
           </motion.div>
         )}
@@ -70,8 +73,10 @@ export default function ScreenCaptcha({ onNext }) {
             transition={{ duration: 0.4 }}
             className="text-center py-4"
           >
-            <div className="text-4xl mb-3">❌</div>
-            <p className="text-white font-bold text-lg mb-1">Verification Failed ❌</p>
+            <div className="flex justify-center mb-3">
+              <XCircle size={48} className="text-red-400" strokeWidth={1.5} />
+            </div>
+            <p className="text-white font-bold text-lg mb-1">Verification Failed</p>
             <p className="text-purple-200 text-sm mb-2">Priya not found.</p>
             <div className="bg-yellow-500/10 border border-yellow-400/20 rounded-2xl p-3 mb-4">
               <p className="text-yellow-300 text-sm">Subject successfully hidden from the internet 😂</p>

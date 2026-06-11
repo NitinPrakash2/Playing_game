@@ -2,11 +2,14 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Card, { OptionBtn, Btn } from "../ui";
 import { useGame } from "../GameState";
+import Spinner from "../Spinner";
+import { AlertCircle, Lock, BarChart3, Eye } from "lucide-react";
 
 const options = [
   {
     label: "Turant reply karti ho",
-    tag: "🚨 Suspicious",
+    tag: AlertCircle,
+    tagText: "Suspicious",
     resp: "Turant reply? Investigation team is alarmed. Too fast. Definitely hiding something.",
     bars: [
       { label: "Reply Speed", value: 98, color: "from-green-400 to-teal-400" },
@@ -16,7 +19,8 @@ const options = [
   },
   {
     label: "Thodi der baad reply karti ho",
-    tag: "📊 Normal",
+    tag: BarChart3,
+    tagText: "Normal",
     resp: "Thodi der baad. Classic. Pretending to be busy. We see through this strategy.",
     bars: [
       { label: "Reply Speed", value: 54, color: "from-yellow-400 to-orange-400" },
@@ -26,7 +30,8 @@ const options = [
   },
   {
     label: "Bahut der baad reply karti ho",
-    tag: "🕵️ Classic",
+    tag: Eye,
+    tagText: "Classic",
     resp: "Bahut der baad. International mystery detected. Experts are already confused.",
     bars: [
       { label: "Reply Speed", value: 8, color: "from-red-400 to-rose-500" },
@@ -36,7 +41,8 @@ const options = [
   },
   {
     label: "Reply karne ka sochti ho",
-    tag: "🔒 Classified",
+    tag: Lock,
+    tagText: "Classified",
     resp: "Sochti ho but reply nahi. This is an advanced-level disappearing act. Respect.",
     bars: [
       { label: "Reply Speed", value: 1, color: "from-gray-400 to-slate-400" },
@@ -73,14 +79,20 @@ export default function Screen2({ onNext }) {
       </h2>
 
       <div className="flex flex-col gap-2 mb-4">
-        {options.map((o, i) => (
-          <OptionBtn key={i} onClick={() => pick(i)} selected={selected === i}>
-            <span>{o.label}</span>
-            {selected === i && (
-              <span className="ml-2 text-xs text-pink-300">{o.tag}</span>
-            )}
-          </OptionBtn>
-        ))}
+        {options.map((o, i) => {
+          const TagIcon = o.tag;
+          return (
+            <OptionBtn key={i} onClick={() => pick(i)} selected={selected === i}>
+              <span>{o.label}</span>
+              {selected === i && (
+                <span className="ml-2 text-xs text-pink-300 flex items-center gap-1">
+                  <TagIcon size={14} />
+                  {o.tagText}
+                </span>
+              )}
+            </OptionBtn>
+          );
+        })}
       </div>
 
       <AnimatePresence mode="wait">
@@ -103,11 +115,7 @@ export default function Screen2({ onNext }) {
             animate={{ opacity: 1 }}
             className="text-center py-2 mb-3"
           >
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-              className="text-3xl w-fit mx-auto mb-1"
-            >🔄</motion.div>
+            <Spinner size={28} color="text-purple-400" className="mb-2" />
             <p className="text-purple-200 text-xs">Analyzing response...</p>
           </motion.div>
         )}
@@ -115,7 +123,7 @@ export default function Screen2({ onNext }) {
 
       {opt && !locked && (
         <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}>
-          <Btn onClick={confirm}>Lock In Answer 🔒</Btn>
+          <Btn onClick={confirm} icon={Lock}>Lock In Answer</Btn>
         </motion.div>
       )}
     </Card>

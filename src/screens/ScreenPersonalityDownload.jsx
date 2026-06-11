@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Card, { Btn } from "../ui";
 import { useGame } from "../GameState";
+import { HardDrive, RotateCcw, ShieldAlert } from "lucide-react";
 
 const steps = [10, 25, 57, 89];
 
@@ -48,8 +49,10 @@ export default function ScreenPersonalityDownload({ onNext }) {
             <motion.div
               animate={glitch ? { x: [-4, 4, -4, 4, 0], skewX: [-5, 5, 0] } : {}}
               transition={{ duration: 0.3, repeat: glitch ? 2 : 0 }}
-              className="text-4xl mb-4"
-            >💾</motion.div>
+              className="flex justify-center mb-4"
+            >
+              <HardDrive size={40} className="text-yellow-400" strokeWidth={2} />
+            </motion.div>
             <h2 className="text-white font-bold text-base mb-5">
               {glitch ? <span className="text-red-400 font-mono">GL!TCH D3T3CT3D...</span> : "Downloading Personality..."}
             </h2>
@@ -71,7 +74,9 @@ export default function ScreenPersonalityDownload({ onNext }) {
 
         {phase === "error" && (
           <motion.div key="error" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-4">
-            <div className="text-4xl mb-3">❌</div>
+            <div className="flex justify-center text-4xl mb-3">
+              <XCircle size={48} className="text-red-400" strokeWidth={1.5} />
+            </div>
             <p className="text-white font-bold text-lg mb-2">ERROR ❌</p>
             <div className="bg-red-500/10 border border-red-400/20 rounded-2xl p-3 mb-5">
               <p className="text-red-300 text-sm">Subject denied access.</p>
@@ -82,14 +87,18 @@ export default function ScreenPersonalityDownload({ onNext }) {
 
         {phase === "retry" && (
           <motion.div key="retry" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-center py-8">
-            <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1.2, ease: "linear" }} className="text-4xl mb-4 w-fit mx-auto">🔄</motion.div>
+            <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1.2, ease: "linear" }} className="flex justify-center mb-4">
+              <RotateCcw size={40} className="text-purple-400" strokeWidth={2} />
+            </motion.div>
             <p className="text-purple-200 text-sm">Retrying access...</p>
           </motion.div>
         )}
 
         {phase === "denied" && (
           <motion.div key="denied" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-4">
-            <div className="text-4xl mb-3">🚫</div>
+            <div className="flex justify-center text-4xl mb-3">
+              <ShieldAlert size={48} className="text-red-400" strokeWidth={1.5} />
+            </div>
             <p className="text-white font-bold text-base mb-2">Subject denied access again 😂</p>
             <div className="bg-purple-500/10 border border-purple-400/20 rounded-2xl p-3 mb-5">
               <p className="text-purple-300 text-sm">Personality remains classified.</p>

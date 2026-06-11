@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Card, { Btn } from "../ui";
 import { useGame } from "../GameState";
+import { Send, CheckCircle, AlertCircle, Database } from "lucide-react";
 
 // Step 1 — initial defence
 const defences = [
@@ -168,7 +169,7 @@ export default function Screen4({ onNext }) {
         {phase === "defence" && (
           <motion.div key="defence" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, x: -20 }}>
             <div className="bg-black/30 border border-white/10 rounded-2xl p-3 mb-4">
-              <p className="text-white/50 text-xs mb-1">Investigator says:</p>
+              <p className="text-white/50 text-xs mb-1 flex items-center gap-1"><AlertCircle size={12} /> Investigator says:</p>
               <p className="text-white text-sm font-medium">
                 "Humein reliable sources se pata chala hai ki tum thodi si akdu hoti ho. Kya kehna hai tumhara?"
               </p>
@@ -187,7 +188,7 @@ export default function Screen4({ onNext }) {
             <AnimatePresence>
               {defSel !== null && (
                 <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}>
-                  <Btn onClick={submitDefence}>Submit Response</Btn>
+                  <Btn onClick={submitDefence} icon={Send}>Submit Response</Btn>
                 </motion.div>
               )}
             </AnimatePresence>
@@ -198,7 +199,7 @@ export default function Screen4({ onNext }) {
         {phase === "followup" && (
           <motion.div key="followup" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
             <div className="bg-red-500/10 border border-red-400/20 rounded-2xl p-3 mb-4">
-              <p className="text-red-300 text-xs mb-1 uppercase tracking-widest">Follow-up Question</p>
+              <p className="text-red-300 text-xs mb-1 uppercase tracking-widest flex items-center gap-1"><Database size={12} /> Follow-up Question</p>
               <p className="text-white text-sm font-medium leading-snug">
                 {followUps[defSel].q}
               </p>
@@ -220,7 +221,7 @@ export default function Screen4({ onNext }) {
           <motion.div key="result" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
             transition={{ type: "spring", stiffness: 240, damping: 20 }}>
             <div className="bg-black/40 border border-white/15 rounded-2xl p-4 font-mono text-xs mb-4">
-              <p className="text-green-400 font-bold mb-2">CASE NOTE FILED ✔</p>
+              <p className="text-green-400 font-bold mb-2 flex items-center gap-1"><CheckCircle size={14} /> CASE NOTE FILED</p>
               <div className="space-y-1.5 text-white/70">
                 <div className="flex justify-between">
                   <span className="text-purple-300">Defence:</span>

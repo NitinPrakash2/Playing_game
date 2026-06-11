@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Card, { Btn } from "../ui";
 import { useGame } from "../GameState";
+import { CheckCircle, Trophy, FileText, Smile } from "lucide-react";
 
 const verdictMsgs = [
   "Generating Final Verdict...",
@@ -91,8 +92,11 @@ export default function ScreenFinal() {
           {phase === "report" && (
             <motion.div key="report" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity, duration: 2 }}
-                className="text-4xl text-center mb-3">✅</motion.div>
-              <h2 className="text-white font-bold text-center text-lg mb-4">INVESTIGATION COMPLETE ✅</h2>
+                className="flex justify-center mb-3"
+              >
+                <CheckCircle size={48} className="text-green-400" strokeWidth={1.5} />
+              </motion.div>
+              <h2 className="text-white font-bold text-center text-lg mb-4">INVESTIGATION COMPLETE</h2>
               <div className="bg-black/30 rounded-2xl p-4 font-mono text-sm mb-4 space-y-2">
                 {[
                   ["Human",       "Confirmed ✔",           "text-green-400"],
@@ -115,7 +119,9 @@ export default function ScreenFinal() {
           {phase === "loading" && (
             <motion.div key="loading" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="text-center py-8">
               <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1.2, ease: "linear" }}
-                className="text-4xl mb-5 w-fit mx-auto">🔍</motion.div>
+                className="flex justify-center mb-5">
+                <FileText size={40} className="text-purple-400" strokeWidth={2} />
+              </motion.div>
               <AnimatePresence mode="wait">
                 <motion.p key={msgIdx} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }}
                   className="text-purple-200 text-sm font-medium">{verdictMsgs[msgIdx]}</motion.p>
@@ -127,7 +133,10 @@ export default function ScreenFinal() {
             <motion.div key="verdict" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
               transition={{ type: "spring", stiffness: 220, damping: 18 }} className="text-center">
               <motion.div animate={{ scale: [1, 1.3, 1] }} transition={{ duration: 0.6, repeat: 2 }}
-                className="text-5xl mb-4">🎉</motion.div>
+                className="flex justify-center mb-4"
+              >
+                <Trophy size={48} className="text-yellow-400" strokeWidth={1.5} />
+              </motion.div>
               <p className="text-white/60 text-xs uppercase tracking-widest mb-2">After extensive investigation...</p>
               <p className="text-white font-bold text-base mb-2 leading-snug">
                 We have successfully confirmed that<br />
@@ -191,7 +200,10 @@ export default function ScreenFinal() {
             <motion.div key="closed" initial={{ opacity: 0, scale: 0.88 }} animate={{ opacity: 1, scale: 1 }}
               transition={{ type: "spring", stiffness: 220, damping: 18 }} className="text-center py-6">
               <motion.div animate={{ rotate: [0, -5, 5, -5, 0] }} transition={{ duration: 0.5, repeat: 2 }}
-                className="text-5xl mb-4">😌</motion.div>
+                className="flex justify-center mb-4"
+              >
+                <Smile size={48} className="text-purple-300" strokeWidth={1.5} />
+              </motion.div>
               <p className="text-white font-bold text-lg mb-1">Investigation archived.</p>
               <p className="text-purple-300 text-sm mb-1">Subject remains interesting.</p>
               <p className="text-pink-300 text-sm mb-5">Goodbye 👋</p>

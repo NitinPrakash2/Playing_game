@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Card, { Btn } from "../ui";
 import { useGame } from "../GameState";
+import { Trophy } from "lucide-react";
 
 function useConfetti(ref, active) {
   useEffect(() => {
@@ -80,7 +81,7 @@ export default function ScreenCertificate({ onNext }) {
             transition={{ type: "spring", stiffness: 200, damping: 14, delay: 0.7 }}
             className="text-center mt-4"
           >
-            <span className="text-4xl">🏆</span>
+            <Trophy size={48} className="text-yellow-400 mx-auto" strokeWidth={1.5} />
             <p className="text-yellow-300 text-xs font-bold mt-1">Officially Verified Human</p>
           </motion.div>
         </div>
@@ -88,7 +89,7 @@ export default function ScreenCertificate({ onNext }) {
         <AnimatePresence mode="wait">
           {!claimed ? (
             <motion.div key="btn" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <Btn onClick={claim} className="bg-gradient-to-r from-yellow-500 to-orange-500">Claim Certificate 🎉</Btn>
+              <Btn onClick={claim}>Claim Certificate</Btn>
             </motion.div>
           ) : (
             <motion.div key="done" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-2">

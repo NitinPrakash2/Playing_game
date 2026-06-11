@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 
 export const cardVariants = {
   hidden: { opacity: 0, y: 40, scale: 0.95 },
@@ -20,14 +21,15 @@ export default function Card({ children, className = "" }) {
   );
 }
 
-export function Btn({ children, onClick, className = "", disabled = false }) {
+export function Btn({ children, onClick, className = "", disabled = false, icon: Icon = null }) {
   return (
     <motion.button
       whileTap={{ scale: 0.96 }}
       onClick={onClick}
       disabled={disabled}
-      className={`w-full py-4 rounded-2xl font-semibold text-white text-base bg-gradient-to-r from-pink-500 to-purple-600 shadow-lg active:opacity-90 transition-opacity touch-manipulation select-none ${disabled ? "opacity-40 pointer-events-none" : ""} ${className}`}
+      className={`w-full py-4 rounded-2xl font-semibold text-white text-base bg-gradient-to-r from-pink-500 to-purple-600 shadow-lg active:opacity-90 transition-opacity touch-manipulation select-none flex items-center justify-center gap-2 ${disabled ? "opacity-40 pointer-events-none" : ""} ${className}`}
     >
+      {Icon && <Icon size={20} strokeWidth={2} />}
       {children}
     </motion.button>
   );
