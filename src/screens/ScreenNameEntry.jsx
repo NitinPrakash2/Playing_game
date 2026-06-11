@@ -26,6 +26,7 @@ function TerminalScan({ entered, onDone }) {
       setTimeout(onDone, 700);
       return;
     }
+    //hello
 
     const line = scanLines[visibleLines].text;
 
