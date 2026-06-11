@@ -4,8 +4,9 @@ import Card, { Btn } from "../ui";
 import { useGame } from "../GameState";
 import { Search, Wand2 } from "lucide-react";
 
-export default function Screen1({ onNext }) {
+export default function Screen1({ onNext, answers }) {
   const { unlock } = useGame();
+  const userName = answers?.[0] || "Priya";
   useEffect(() => { unlock("start"); }, []);
   return (
     <Card>
@@ -18,10 +19,10 @@ export default function Screen1({ onNext }) {
         <Search size={48} className="text-pink-400" strokeWidth={1.5} />
       </motion.div>
       <h1 className="text-2xl font-bold text-center text-white mb-2">
-        Welcome Priya
+        Welcome {userName}
       </h1>
       <p className="text-purple-200 text-center text-sm mb-1">
-        Hame shak hai ki tum secretly ek human ho.
+        Hame lagta hai tum secretly ek human ho.
       </p>
       <p className="text-pink-300 text-center text-sm font-medium mb-6">
         Verification required.

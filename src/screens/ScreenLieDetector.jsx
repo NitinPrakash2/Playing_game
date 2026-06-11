@@ -5,28 +5,27 @@ import { useGame } from "../GameState";
 import { Activity, Check, AlertTriangle } from "lucide-react";
 
 const questions = [
-  "Kya tum kabhi boring nahi hoti? 🤔",
-  "Kya tumhara phone battery 20% se upar rehti hai? 🔋",
-  "Kya tum notifications turant check karti ho? 📳",
-  "Kya tum actually productive hoti kabhi kabhi? 💼",
+  "Kya tum kabhi boring nahi hoti?",
+  "Kya tumhara phone battery 20% se upar rehti hai?",
+  "Kya tum notifications turant check karti ho?",
+  "Kya tum actually productive hoti kabhi kabhi?",
 ];
 
 const answers = {
   yes: [
-    { resp: "LIE DETECTED 📈 Stress graph went vertical. Investigation team skeptical.", stress: 91, label: "Deception Index" },
-    { resp: "Impossible. Government records show otherwise. Case noted.", stress: 78, label: "Suspicion Level" },
-    { resp: "Bold claim. Zero evidence found to support this. Filing under: Unverified.", stress: 83, label: "Doubt Level" },
-    { resp: "Surprisingly believable. But investigation team is still watching.", stress: 44, label: "Trust Level" },
+    { resp: "LIE DETECTED - Stress levels went through roof. Your answer just set off 47 alarms simultaneously.", stress: 91, label: "Deception Index" },
+    { resp: "Impossible? Our satellite is currently tracking your phone battery right now. Its at 8%.", stress: 88, label: "Suspicion Level" },
+    { resp: "Bold claim. Zero evidence found. Filing this under: Very Creative Fiction. Respect the effort.", stress: 85, label: "Doubt Level" },
+    { resp: "Productive? We checked your browsing history. Last 3 hours: Reels, Instagram, YouTube. Hmm.", stress: 78, label: "Trust Level" },
   ],
   no: [
-    { resp: "HONESTY DETECTED ✅ Rare trait. Investigation team impressed. Slightly.", stress: 12, label: "Honesty Index" },
-    { resp: "Confirmed. This matches all available satellite data.", stress: 8, label: "Deception Index" },
-    { resp: "Fair enough. Case marked as: Realistic Human Behaviour.", stress: 15, label: "Suspicion Level" },
-    { resp: "Appreciated. Rare moment of transparency. Logged.", stress: 20, label: "Doubt Level" },
+    { resp: "HONESTY DETECTED - Rare trait confirmed. Investigation team is taking a tea break. Respect.", stress: 12, label: "Honesty Index" },
+    { resp: "Confirmed by satellite data and phone analytics. This is actually believable. Shocking.", stress: 8, label: "Deception Index" },
+    { resp: "Fair answer. Case marked as: Realistic Human Behaviour. Investigation continuing cautiously.", stress: 18, label: "Suspicion Level" },
+    { resp: "Appreciated. This is actual transparency. Rare moment detected. We are genuinely surprised.", stress: 15, label: "Doubt Level" },
   ],
 };
 
-// Animated stress line using canvas
 function StressGraph({ value, animate: doAnimate }) {
   const canvasRef = useRef(null);
 
@@ -68,21 +67,21 @@ function StressGraph({ value, animate: doAnimate }) {
 }
 
 const scanningSteps = [
-  { text: "> Reading biometric response...",     color: "text-green-400" },
-  { text: "> Analyzing micro-expressions...",     color: "text-yellow-300" },
-  { text: "> Checking voice stress patterns...",  color: "text-yellow-300" },
-  { text: "> Cross-referencing truth database...",color: "text-purple-300" },
-  { text: "> Verdict calculating...",             color: "text-red-300" },
+  "> Reading biometric response...",
+  "> Analyzing micro-expressions...",
+  "> Checking voice stress patterns...",
+  "> Cross-referencing truth database...",
+  "> Verdict calculating...",
 ];
 
 function ScanningTerminal() {
   const [visibleLines, setVisibleLines] = useState(0);
-  const [charBuf, setCharBuf]           = useState("");
-  const [charIdx, setCharIdx]           = useState(0);
+  const [charBuf, setCharBuf] = useState("");
+  const [charIdx, setCharIdx] = useState(0);
 
   useEffect(() => {
     if (visibleLines >= scanningSteps.length) return;
-    const line = scanningSteps[visibleLines].text;
+    const line = scanningSteps[visibleLines];
     if (charIdx < line.length) {
       const t = setTimeout(() => {
         setCharBuf(line.slice(0, charIdx + 1));
@@ -110,10 +109,10 @@ function ScanningTerminal() {
           <span className="text-red-400 uppercase tracking-widest text-xs">Scanning Active</span>
         </div>
         {scanningSteps.slice(0, visibleLines).map((l, i) => (
-          <div key={i} className={`mb-1 ${l.color}`}>{l.text}</div>
+          <div key={i} className="mb-1 text-red-300">{l}</div>
         ))}
         {visibleLines < scanningSteps.length && (
-          <div className={scanningSteps[visibleLines].color}>
+          <div className="text-red-300">
             {charBuf}<span className="animate-pulse">▌</span>
           </div>
         )}
@@ -131,7 +130,7 @@ function ScanningTerminal() {
 
 export default function ScreenLieDetector({ onNext }) {
   const { awardRandom } = useGame();
-  const [phase, setPhase] = useState("idle"); // idle | scanning | result
+  const [phase, setPhase] = useState("idle");
   const [result, setResult] = useState(null);
   const [qIdx] = useState(() => Math.floor(Math.random() * questions.length));
 
@@ -147,12 +146,11 @@ export default function ScreenLieDetector({ onNext }) {
 
   return (
     <Card>
-      <p className="text-xs text-pink-300 uppercase tracking-widest mb-2 text-center">Lie Detector Test 🔴</p>
+      <p className="text-xs text-pink-300 uppercase tracking-widest mb-2 text-center">Lie Detector Test</p>
       <h2 className="text-white font-bold text-base text-center mb-4">
         {questions[qIdx]}
       </h2>
 
-      {/* Live stress graph — always visible */}
       <div className="bg-black/40 border border-white/10 rounded-2xl px-3 pt-2 pb-1 mb-4">
         <p className="text-white/30 text-xs mb-1 flex items-center gap-1"><Activity size={12} /> Live Stress Monitor</p>
         <StressGraph
@@ -170,11 +168,11 @@ export default function ScreenLieDetector({ onNext }) {
             className="flex gap-2">
             <motion.button whileTap={{ scale: 0.96 }} onClick={() => answer("yes")}
               className="flex-1 py-4 rounded-2xl font-semibold text-white bg-gradient-to-r from-green-500 to-teal-500 touch-manipulation">
-              Haan ✅
+              Haan
             </motion.button>
             <motion.button whileTap={{ scale: 0.96 }} onClick={() => answer("no")}
               className="flex-1 py-4 rounded-2xl font-semibold text-white bg-gradient-to-r from-red-500 to-pink-500 touch-manipulation">
-              Nahi ❌
+              Nahi
             </motion.button>
           </motion.div>
         )}

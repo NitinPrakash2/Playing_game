@@ -3,20 +3,23 @@ import { createContext, useContext, useState, useCallback } from "react";
 const GameCtx = createContext(null);
 
 export const ACHIEVEMENTS = [
-  { id: "start",       icon: "🏆", title: "Started Investigation",    desc: "Welcome to the investigation." },
-  { id: "q1",          icon: "🏆", title: "Question Answered",        desc: "First response recorded." },
-  { id: "scan",        icon: "🔬", title: "Scan Survived",            desc: "Personality scan complete." },
-  { id: "captcha",     icon: "🤖", title: "CAPTCHA Defeated",         desc: "Subject not found. As expected." },
-  { id: "download",    icon: "💾", title: "Access Denied Expert",     desc: "Denied twice. Respect." },
-  { id: "evidence",    icon: "📦", title: "Evidence Collected",       desc: "Secret box opened successfully." },
-  { id: "witness",     icon: "🎤", title: "Witness Interviewed",      desc: "Statement recorded. Useless." },
-  { id: "prediction",  icon: "🔮", title: "Fate Accepted",            desc: "Future analyzed. Mostly guessed." },
-  { id: "luck",        icon: "🍀", title: "Luck Analyzed",            desc: "Government luck report filed." },
-  { id: "mindreader",  icon: "🧠", title: "Mind Read",                desc: "Thoughts: still classified." },
-  { id: "secretfile",  icon: "🔒", title: "Opened Secret File",       desc: "PRIYA.EXE accessed." },
-  { id: "constellation",icon: "⭐","title": "Constellation Built",    desc: "Personality mapped to stars." },
-  { id: "certificate", icon: "🎖️", title: "Certificate Claimed",     desc: "Officially a verified human." },
-  { id: "survived",    icon: "😌", title: "Still Here Somehow",       desc: "Investigation survived." },
+  { id: "start", icon: "🏆", title: "Started Investigation", desc: "Welcome to the investigation." },
+  { id: "q1", icon: "🏆", title: "Question Answered", desc: "First response recorded." },
+  { id: "scan", icon: "🔬", title: "Scan Survived", desc: "Personality scan complete." },
+  { id: "memory_game", icon: "🧠", title: "Memory Master", desc: "Won the memory game." },
+  { id: "number_game", icon: "🎯", title: "Lucky Guesser", desc: "Won the number guessing game." },
+  { id: "math_game", icon: "📐", title: "Math Genius", desc: "Won the math challenge." },
+  { id: "captcha", icon: "🤖", title: "CAPTCHA Defeated", desc: "Subject not found. As expected." },
+  { id: "download", icon: "💾", title: "Access Denied Expert", desc: "Denied twice. Respect." },
+  { id: "evidence", icon: "📦", title: "Evidence Collected", desc: "Secret box opened successfully." },
+  { id: "witness", icon: "🎤", title: "Witness Interviewed", desc: "Statement recorded. Useless." },
+  { id: "prediction", icon: "🔮", title: "Fate Accepted", desc: "Future analyzed. Mostly guessed." },
+  { id: "luck", icon: "🍀", title: "Luck Analyzed", desc: "Government luck report filed." },
+  { id: "mindreader", icon: "🧠", title: "Mind Read", desc: "Thoughts: still classified." },
+  { id: "secretfile", icon: "🔒", title: "Opened Secret File", desc: "PRIYA.EXE accessed." },
+  { id: "constellation", icon: "⭐", title: "Constellation Built", desc: "Personality mapped to stars." },
+  { id: "certificate", icon: "🎖️", title: "Certificate Claimed", desc: "Officially a verified human." },
+  { id: "survived", icon: "😌", title: "Still Here Somehow", desc: "Investigation survived." },
 ];
 
 const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
@@ -42,10 +45,10 @@ export function GameProvider({ children }) {
 
   const awardRandom = useCallback(() => {
     setScore((s) => ({
-      curiosity:  s.curiosity  + rand(5, 20),
-      patience:   s.patience   + rand(5, 20),
-      mystery:    s.mystery    + rand(5, 20),
-      skill:      s.skill      + rand(5, 20),
+      curiosity: s.curiosity + rand(5, 20),
+      patience: s.patience + rand(5, 20),
+      mystery: s.mystery + rand(5, 20),
+      skill: s.skill + rand(5, 20),
     }));
   }, []);
 

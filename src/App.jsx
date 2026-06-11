@@ -10,7 +10,9 @@ import Screen1 from "./screens/Screen1";
 import Screen2 from "./screens/Screen2";
 import Screen3 from "./screens/Screen3";
 import Screen4 from "./screens/Screen4";
-import ScreenSuspectProfile from "./screens/ScreenSuspectProfile";
+import ScreenNumberGame from "./screens/ScreenNumberGame";
+import ScreenMathChallenge from "./screens/ScreenMathChallenge";
+import ScreenMemoryGame from "./screens/ScreenMemoryGame";
 import ScreenLieDetector from "./screens/ScreenLieDetector";
 import ScreenMindReader from "./screens/ScreenMindReader";
 import Screen5 from "./screens/Screen5";
@@ -21,20 +23,21 @@ import ScreenCertificate from "./screens/ScreenCertificate";
 import ScreenFinal from "./screens/ScreenFinal";
 
 const screens = [
-  ScreenNameEntry,      // 0  — Name entry
-  Screen1,              // 1  — Welcome
-  Screen2,              // 1  — Reply speed (Q1)
-  Screen3,              // 2  — Personality scan results
-  ScreenSuspectProfile, // 3  — Build suspect profile (3-step rapid picks)
-  Screen4,              // 4  — Akdu rumour
-  ScreenLieDetector,    // 5  — Lie detector with live graph
-  Screen5,              // 6  — Hobby question
-  Screen6,              // 7  — Memory test
-  ScreenMindReader,     // 8  — Mind reader machine
-  Screen7,              // 9  — Secret file terminal
-  ScreenConstellation,  // 10 — Personality constellation
-  ScreenCertificate,    // 11 — Official certificate
-  ScreenFinal,          // 12 — Final report
+  ScreenNameEntry,      // 0  — Name entry with database verification
+  Screen1,              // 1  — Welcome by name
+  Screen2,              // 2  — Reply speed question
+  Screen3,              // 3  — Personality scan results
+  ScreenMemoryGame,     // 4  — Memory card game (was ScreenSuspectProfile)
+  ScreenNumberGame,     // 5  — Number guessing game
+  ScreenMathChallenge,  // 6  — Math quiz challenge
+  ScreenLieDetector,    // 7  — Lie detector
+  Screen5,              // 8  — Hobby question
+  Screen6,              // 9  — Memory test
+  ScreenMindReader,     // 10 — Mind reader machine
+  Screen7,              // 11 — Secret file terminal
+  ScreenConstellation,  // 12 — Personality constellation
+  ScreenCertificate,    // 13 — Official certificate
+  ScreenFinal,          // 14 — Final report
 ];
 
 function AppInner() {
