@@ -57,9 +57,9 @@ export default function Screen3({ onNext, answers }) {
   const [msgIdx, setMsgIdx] = useState(0);
   const [done, setDone] = useState(false);
 
-  const answer = answers?.[1]; // Screen2 is step index 1
-  const bars = answer !== undefined ? barSets[answer] : defaultBars;
-  const verdict = answer !== undefined ? verdictMap[answer] : "Analysis complete 📊";
+  const answer = answers?.[2]; // Screen2 is now step index 2 (after ScreenNameEntry + Screen1)
+  const bars = (answer !== undefined && barSets[answer]) ? barSets[answer] : defaultBars;
+  const verdict = (answer !== undefined && verdictMap[answer]) ? verdictMap[answer] : "Analysis complete 📊";
 
   const { unlock, awardRandom } = useGame();
 
