@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Card, { Btn } from "../ui";
 import { useGame } from "../GameState";
@@ -70,7 +70,7 @@ const caseNotes = {
 
 function TypingText({ text }) {
   const [shown, setShown] = useState("");
-  useState(() => {
+  useEffect(() => {
     let i = 0;
     const iv = setInterval(() => {
       setShown(text.slice(0, i + 1));
@@ -78,8 +78,58 @@ function TypingText({ text }) {
       if (i >= text.length) clearInterval(iv);
     }, 22);
     return () => clearInterval(iv);
-  });
+  }, [text]);
   return <span>{shown}</span>;
+}
+
+const filingLines = [
+  { text: "> Saving interrogation transcript...", color: "text-green-400" },
+  { text: "> Cross-referencing previous cases...", color: "text-yellow-300" },
+  { text: "> Updating suspect database...",        color: "text-purple-300" },
+  { text: "> Case report filed successfully ✔",   color: "text-green-300 font-bold" },
+];
+
+function FilingTerminal() {
+  const [visibleLines, setVisibleLines] = useState(0);
+  const [charBuf, setCharBuf]           = useState("");
+  const [charIdx, setCharIdx]           = useState(0);
+
+  useEffect(() => {
+    if (visibleLines >= filingLines.length) return;
+    const line = filingLines[visibleLines].text;
+    if (charIdx < line.length) {
+      const t = setTimeout(() => {
+        setCharBuf(line.slice(0, charIdx + 1));
+        setCharIdx((c) => c + 1);
+      }, 30);
+      return () => clearTimeout(t);
+    } else {
+      const t = setTimeout(() => {
+        setVisibleLines((v) => v + 1);
+        setCharBuf("");
+        setCharIdx(0);
+      }, 160);
+      return () => clearTimeout(t);
+    }
+  }, [visibleLines, charIdx]);
+
+  return (
+    <div className="bg-black/60 border border-green-500/25 rounded-2xl p-3 font-mono text-xs">
+      <div className="flex items-center gap-2 mb-2">
+        <motion.div animate={{ opacity: [1, 0.3, 1] }} transition={{ repeat: Infinity, duration: 0.8 }}
+          className="w-2 h-2 rounded-full bg-green-400" />
+        <span className="text-green-400 uppercase tracking-widest text-xs">Filing Report</span>
+      </div>
+      {filingLines.slice(0, visibleLines).map((l, i) => (
+        <div key={i} className={`mb-1 ${l.color}`}>{l.text}</div>
+      ))}
+      {visibleLines < filingLines.length && (
+        <div className={filingLines[visibleLines].color}>
+          {charBuf}<span className="animate-pulse">▌</span>
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default function Screen4({ onNext }) {
@@ -196,12 +246,10 @@ export default function Screen4({ onNext }) {
           </motion.div>
         )}
 
-        {/* Filing */}
+        {/* Filing — terminal style */}
         {phase === "filing" && (
-          <motion.div key="filing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-4">
-            <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-              className="text-3xl w-fit mx-auto mb-2">🔄</motion.div>
-            <p className="text-purple-200 text-sm">Filing case report...</p>
+          <motion.div key="filing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="py-2">
+            <FilingTerminal />
           </motion.div>
         )}
 

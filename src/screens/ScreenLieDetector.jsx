@@ -66,6 +66,68 @@ function StressGraph({ value, animate: doAnimate }) {
   return <canvas ref={canvasRef} className="w-full" style={{ height: 56 }} />;
 }
 
+const scanningSteps = [
+  { text: "> Reading biometric response...",     color: "text-green-400" },
+  { text: "> Analyzing micro-expressions...",     color: "text-yellow-300" },
+  { text: "> Checking voice stress patterns...",  color: "text-yellow-300" },
+  { text: "> Cross-referencing truth database...",color: "text-purple-300" },
+  { text: "> Verdict calculating...",             color: "text-red-300" },
+];
+
+function ScanningTerminal() {
+  const [visibleLines, setVisibleLines] = useState(0);
+  const [charBuf, setCharBuf]           = useState("");
+  const [charIdx, setCharIdx]           = useState(0);
+
+  useEffect(() => {
+    if (visibleLines >= scanningSteps.length) return;
+    const line = scanningSteps[visibleLines].text;
+    if (charIdx < line.length) {
+      const t = setTimeout(() => {
+        setCharBuf(line.slice(0, charIdx + 1));
+        setCharIdx((c) => c + 1);
+      }, 28);
+      return () => clearTimeout(t);
+    } else {
+      const t = setTimeout(() => {
+        setVisibleLines((v) => v + 1);
+        setCharBuf("");
+        setCharIdx(0);
+      }, 150);
+      return () => clearTimeout(t);
+    }
+  }, [visibleLines, charIdx]);
+
+  const pct = Math.round((visibleLines / scanningSteps.length) * 100);
+
+  return (
+    <div className="py-1">
+      <div className="bg-black/60 border border-red-500/25 rounded-2xl p-3 font-mono text-xs mb-3">
+        <div className="flex items-center gap-2 mb-2">
+          <motion.div animate={{ opacity: [1, 0.2, 1] }} transition={{ repeat: Infinity, duration: 0.5 }}
+            className="w-2 h-2 rounded-full bg-red-400" />
+          <span className="text-red-400 uppercase tracking-widest text-xs">Scanning Active</span>
+        </div>
+        {scanningSteps.slice(0, visibleLines).map((l, i) => (
+          <div key={i} className={`mb-1 ${l.color}`}>{l.text}</div>
+        ))}
+        {visibleLines < scanningSteps.length && (
+          <div className={scanningSteps[visibleLines].color}>
+            {charBuf}<span className="animate-pulse">▌</span>
+          </div>
+        )}
+      </div>
+      <div className="flex justify-between text-xs text-white/30 mb-1">
+        <span>Analysis progress</span><span>{pct}%</span>
+      </div>
+      <div className="h-1.5 bg-white/10 rounded-full overflow-hidden">
+        <motion.div className="h-full rounded-full bg-gradient-to-r from-red-400 to-pink-500"
+          animate={{ width: `${pct}%` }} transition={{ duration: 0.3 }} />
+      </div>
+    </div>
+  );
+}
+
 export default function ScreenLieDetector({ onNext }) {
   const { awardRandom } = useGame();
   const [phase, setPhase] = useState("idle"); // idle | scanning | result
@@ -117,21 +179,31 @@ export default function ScreenLieDetector({ onNext }) {
         )}
 
         {phase === "scanning" && (
-          <motion.div key="scanning" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-            className="text-center py-2">
-            <motion.div animate={{ scale: [1, 1.15, 1] }} transition={{ repeat: Infinity, duration: 0.5 }}
-              className="text-3xl mb-2">🔴</motion.div>
-            <p className="text-red-300 text-sm font-medium">Analyzing response...</p>
+          <motion.div key="scanning" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <ScanningTerminal />
           </motion.div>
         )}
 
         {phase === "result" && result && (
           <motion.div key="result" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
             transition={{ type: "spring", stiffness: 260, damping: 20 }}>
-            <div className={`rounded-2xl p-3 mb-4 text-center ${result.stress > 50
-              ? "bg-red-500/15 border border-red-400/25"
-              : "bg-green-500/15 border border-green-400/25"}`}>
-              <p className="text-white text-sm">{result.resp}</p>
+            <div className="bg-black/40 border border-white/15 rounded-2xl p-4 font-mono text-xs mb-4">
+              <p className={`font-bold mb-2 text-sm ${result.stress > 50 ? "text-red-400" : "text-green-400"}`}>
+                {result.stress > 50 ? "⚠ ANOMALY DETECTED" : "✔ RESPONSE VERIFIED"}
+              </p>
+              <div className="space-y-1.5 text-white/70 mb-3">
+                <div className="flex justify-between">
+                  <span className="text-purple-300">{result.label}:</span>
+                  <span className={`font-bold ${result.stress > 50 ? "text-red-300" : "text-green-300"}`}>{result.stress}%</span>
+                </div>
+              </div>
+              <div className="h-1.5 bg-white/10 rounded-full overflow-hidden mb-3">
+                <motion.div
+                  className={`h-full rounded-full ${result.stress > 50 ? "bg-gradient-to-r from-red-400 to-pink-500" : "bg-gradient-to-r from-green-400 to-teal-400"}`}
+                  initial={{ width: 0 }} animate={{ width: `${result.stress}%` }}
+                  transition={{ duration: 0.9, ease: "easeOut" }} />
+              </div>
+              <p className="text-white/80 leading-relaxed">{result.resp}</p>
             </div>
             <Btn onClick={onNext}>Continue</Btn>
           </motion.div>
