@@ -93,11 +93,11 @@ export default function ScreenLieDetector({ onNext }) {
       <div className="bg-black/40 border border-white/10 rounded-2xl px-3 pt-2 pb-1 mb-4">
         <p className="text-white/30 text-xs mb-1">Live Stress Monitor</p>
         <StressGraph
-          value={phase === "result" ? result.stress : phase === "scanning" ? 85 : 18}
+          value={phase === "result" && result ? result.stress : phase === "scanning" ? 85 : 18}
           animate={phase !== "idle"}
         />
         <p className="text-white/20 text-xs text-right mt-0.5">
-          {phase === "idle" ? "Baseline normal" : phase === "scanning" ? "Analyzing..." : `${result.label}: ${result.stress}%`}
+          {phase === "idle" ? "Baseline normal" : phase === "scanning" ? "Analyzing..." : result ? `${result.label}: ${result.stress}%` : ""}
         </p>
       </div>
 
