@@ -60,6 +60,16 @@ export function GameProvider({ children }) {
   );
 }
 
+const defaultCtx = {
+  unlocked: [],
+  score: { curiosity: 0, patience: 0, mystery: 0, skill: 0 },
+  queue: [],
+  unlock: () => {},
+  addScore: () => {},
+  awardRandom: () => {},
+  dismissFirst: () => {},
+};
+
 export function useGame() {
-  return useContext(GameCtx);
+  return useContext(GameCtx) ?? defaultCtx;
 }

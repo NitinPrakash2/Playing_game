@@ -68,7 +68,7 @@ function AnimatedCounter({ value }) {
 }
 
 export default function ScreenFinal() {
-  const { score, unlocked, unlock } = useGame();
+  const { score = { curiosity: 0, patience: 0, mystery: 0, skill: 0 }, unlocked = [], unlock } = useGame();
   const [phase, setPhase] = useState("report");
   const [msgIdx, setMsgIdx] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
